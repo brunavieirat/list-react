@@ -1,20 +1,36 @@
 import React from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import StudentForm from '../StudentForm/index.js';
 import StudentList from '../StudentList/index.js';
 import SideMenu from '../SideMenu/index.js';
 import './App.css';
 
+const API = 'https://private-785c05-learnit.apiary-mock.com'
 
 class App extends React.Component {
   state={
-    students: [
-      
-       
-
-      
-    ]
+    students: [ ]
   }
+
+
+  listStudents = () => {
+    axios.get(`${API}/students`)
+    .then(res=>{
+      this.setState({
+        students: res.data
+      })     
+    })
+    .catch(error =>{
+      console.log(error)
+    })
+    
+  }
+
+  componentDidMount(){
+
+    this.listStudents();
+  }
+
 
   addStudent = (student) => {
     const { students } = this.state;
